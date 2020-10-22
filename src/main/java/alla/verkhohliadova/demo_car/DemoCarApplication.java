@@ -26,7 +26,7 @@ public class DemoCarApplication {
         System.out.println("start");
         SpringApplication.run(DemoCarApplication.class, args);
         System.out.println("end");
-        System.out.println("finish");
+        
         //System.out.println(Country.class);
     }
 
