@@ -21,8 +21,8 @@ public class CategoryTest {
         expected.add(category1);
 
         List<Category> actual = new ArrayList<>();
-        //actual.add(category1);
-        actual.add(category2);
+        actual.add(category1);
+        //actual.add(category2);
 
         Assert.assertEquals(expected,actual);
     }
