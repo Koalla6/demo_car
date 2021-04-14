@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Всі користувачі</title>
+</head>
+<body>
+<div>
+  <table>
+    <thead>
+    <th>ID</th>
+    <th>Роль</th>
+    <th>Ім'я</th>
+    <th>Прізвище</th>
+    <th>Логін</th>
+    <th>Пароль</th>
+    <th>Стать</th>
+    <th>Email</th>
+    <th>Номер телефону</th>
+    <th>Car_id</th>
+    </thead>
+    <c:forEach items="${allUsers}" var="user">
+      <tr>
+        <td>${user.id}</td>
+        <td>
+          <c:forEach items="${user.userRole}" var="userRole">${userRole.name}</c:forEach>
+        </td>
+        <td>${user.firstname}</td>
+        <td>${user.surname}</td>
+        <td>${user.username}</td>
+        <td>${user.password}</td>
+        <td>${user.sex}</td>
+        <td>${user.email}</td>
+        <td>${user.phone}</td>
+        <td>${user.carId}</td>
+      </tr>
+    </c:forEach>
+  </table>
+</div>
+
+</body>
+</html>

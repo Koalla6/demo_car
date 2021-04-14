@@ -19,10 +19,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String firstname;
+
+    @Column(nullable = false)
+    private String surname;
+
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private Boolean sex;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String phone;
 
     @Column(nullable = false)
     private UserRole userRole;
@@ -31,7 +47,7 @@ public class User {
     private Car car;
 
     @OneToMany(mappedBy = "user")
-    private List<Order> orders = new ArrayList<>();
+    private List<Ordered> orders = new ArrayList<>();
 
     @ManyToMany
     private List<Product> favorites = new ArrayList<>();

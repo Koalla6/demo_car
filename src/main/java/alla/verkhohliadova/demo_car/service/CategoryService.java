@@ -1,5 +1,6 @@
 package alla.verkhohliadova.demo_car.service;
 
+import alla.verkhohliadova.demo_car.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import alla.verkhohliadova.demo_car.dto.request.CategoryRequest;
@@ -7,10 +8,7 @@ import alla.verkhohliadova.demo_car.dto.response.CategoryResponse;
 import alla.verkhohliadova.demo_car.entity.Category;
 import alla.verkhohliadova.demo_car.repository.CategoryRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,10 +27,7 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
-    public Category findOne(Long id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Category with id " + id + " not exists"));
-    }
+
 
     public void update(Long id, CategoryRequest request) {
         categoryRepository.save(categoryRequestToCategory(findOne(id), request));
@@ -49,6 +44,16 @@ public class CategoryService {
         }
         category.setName(request.getName());
         return category;
+    }
+
+    public static Category Category_add(Category category_1){
+        //Category category_1 = new Category();
+        category_1.setName("A КЛАС — MINI CARS");
+        return category_1;
+    }
+
+    public Category findOne(Long id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Product with id " + id + " not exists"));
     }
 }
 

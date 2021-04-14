@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна</title>
+<!--    <link rel="stylesheet" type="text/css" media="all" href="css/index.css" data-th-href="@{/css/index.css}">-->
+<style>
+    /*
+# id
+. class
+*/
+    body{
+        background-color: rgb(25,25,25);
+    }
+
+    #section{
+        min-width: 980px;
+        position: absolute;
+        margin-left: 0px;
+        top: 0px;
+        height: 500px;
+        left: 0px;
+        width: 100%;
+    }
+
+    #div1{
+        data-content-width:"980";
+        flex: 980 1 0%;
+        margin-left: 0px;
+        min-width: 980px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        top: 0px;
+        height: 900px;
+        position: relative;
+    }
+
+    #div2{
+        data-background-image:"";
+        data-position:"absolute";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        background-color: rgb(25, 25, 25);
+    }
+
+    .comp{
+        margin-left: calc((100% - 980px) * 0.5);
+    }
+
+    #div3{
+        title:"";
+        data-is-responsive:"false";
+        data-display-mode:"fill";
+        data-content-padding-horizontal:"0";
+        data-content-padding-vertical:"0";
+        data-exact-height:"420";
+        left: 20px;
+        position: absolute;
+        top: 60px;
+        width: 943px;
+        height: 418px;
+    }
+
+    #div4{
+        width: 943px;
+        height: 418px;
+    }
+
+    #div5{
+        data-has-bg-scroll-effect:"";
+        data-image-info:"{&quot;imageData&quot;:{&quot;id&quot;:&quot;dataItem-kigpp7ii&quot;,&quot;type&quot;:&quot;Image&quot;,&quot;uri&quot;:&quot;89712714a13f44968d486aa56e53bd0e.jpeg&quot;,&quot;alt&quot;:&quot;Car Dealer&quot;,&quot;description&quot;:&quot;&quot;,&quot;width&quot;:4200,&quot;height&quot;:2804,&quot;name&quot;:&quot;Car Dealer&quot;,&quot;metaData&quot;:{&quot;isPreset&quot;:false,&quot;schemaVersion&quot;:&quot;1.0&quot;,&quot;isHidden&quot;:false,&quot;pageId&quot;:&quot;r5g6a&quot;},&quot;title&quot;:&quot;&quot;,&quot;displayMode&quot;:&quot;fill&quot;},&quot;containerId&quot;:&quot;comp-kigpp79c&quot;,&quot;displayMode&quot;:&quot;fill&quot;}";
+        data-has-ssr-src:"";
+        data-is-svg:"false";
+        data-is-svg-mask:"false";
+        width: 940px;
+        height: 420px;
+    }
+
+    #image{
+        alt:"Car Dealer";
+        data-type:"image";
+        itemprop:"image";
+        width: 940px;
+        height: 420px;
+        object-fit: cover;
+    }
+
+    #div6{
+        data-packed:"true";
+        data-vertical-text:"false";
+        left: 20px;
+        width: 940px;
+        position: absolute;
+        pointer-events: none;
+        top: 503px;
+    }
+
+    #h1{
+        text-align:center;
+        line-height:1.25em;
+        color: aliceblue;
+        text-transform:uppercase;
+        font-family: Mak;
+    }
+
+    #div7{
+        data-packed:"true";
+        data-vertical-text:"false";
+        left: 20px;
+        width: 940px;
+        position: absolute;
+        pointer-events: none;
+        top: 600px;
+    }
+
+    #p1{
+        text-align:center;
+        line-height:1.67em;
+        color: aliceblue;
+    }
+
+    #div8{
+        data-packed:"true";
+        data-vertical-text:"false";
+        left: 20px;
+        width: 940px;
+        position: absolute;
+        pointer-events: none;
+        top: 650px;
+    }
+
+    #p2{
+        text-align:center;
+        line-height:1.875em;
+        color: aliceblue;
+    }
+
+    #div9{
+        data-packed:"true";
+        data-vertical-text:"false";
+        left:400px;
+        width: 700px;
+        position: absolute;
+        top: 800px;
+        color: aliceblue;
+    }
+
+    .button1{
+        target:"_self";
+        data-keep-roots:"true";
+        data-anchor-comp-id:"";
+        data-anchor:"dataItem-ius9m6yf";
+        padding: 1rem 1.5rem;
+        text-decoration: none;
+        background-color: rgb(25, 25, 25) ;
+        color: aliceblue;
+        border-radius: 13px;
+        cursor: pointer;
+        font-family: Mak;
+    }
+
+    #div10{
+        data-packed:"true";
+        data-vertical-text:"false";
+        left:400px;
+        width: 700px;
+        position: absolute;
+        top: 1000px;
+        color: aliceblue;
+    }
+
+    #div11{
+        data-packed:"true";
+        data-vertical-text:"false";
+        left:400px;
+        width: 700px;
+        position: absolute;
+        top: 1200px;
+        color: aliceblue;
+    }
+
+</style>
+
+</head>
+<body>
+
+<section id="section" data-responsive="true" data-is-screen-width="true" data-col-margin="0" data-row-margin="0">
+    <div id="div1">
+
+        <div id="div2">
+        </div>
+
+        <div  class="comp" id="div3">
+            <div id="div4" >
+                <div id="div5">
+                    <img id="image" src="https://static.wixstatic.com/media/89712714a13f44968d486aa56e53bd0e.jpeg/v1/fill/w_783,h_350,al_c,q_80,usm_0.66_1.00_0.01/Car%20Dealer.webp">
+                </div>
+            </div>
+        </div>
+
+        <div  class="comp" id="div6">
+            <h1 id="h1">«AUTODEALER» ДО ВАШИХ ПОСЛУГ</h1>
+        </div>
+
+        <div  class="comp" id="div7">
+            <p id="p1">У нас ви&nbsp;знайдете свій автомобіль</p>
+        </div>
+
+        <div  class="comp" id="div8">
+            <p id="p2">Збились з&nbsp;ніг в пошуках&nbsp;підходящого&nbsp;автомобиля?
+                У компанії&nbsp;«autodealer» є пропозиція саме&nbsp;для вас!
+                Ми&nbsp;сертифіковані як Автомобільний дилер і&nbsp;пропонуємо&nbsp;
+                широкий вибір нових и потриманих авто. Ми&nbsp;допоможемо вам вибрати&nbsp;
+                і&nbsp;придбати&nbsp;автомобіль без клопоту.</p>
+        </div>
+
+        <div  class="comp" id="div9">
+            <a href="/signUp">
+             <button class="button1"> Зареєструватись </button>
+            </a>
+        </div>
+        <div class="comp" id="div10">
+        <a href="/login">
+            <button class="button1">зайти</button>
+        </a>
+        </div>
+
+
+    </div>
+
+</section>
+
+</body>
+</html>

@@ -16,6 +16,4 @@ public class CategoryResponse {
         name = category.getName();
         id = category.getId();
     }
-
-
 }

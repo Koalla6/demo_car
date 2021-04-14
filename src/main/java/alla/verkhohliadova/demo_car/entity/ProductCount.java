@@ -26,6 +26,6 @@ public class ProductCount {
     private Car car;
 
     @ManyToOne
-    private Order order;
+    private Ordered ordered;
 
 }

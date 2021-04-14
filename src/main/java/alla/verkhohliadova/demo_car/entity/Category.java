@@ -1,5 +1,6 @@
 package alla.verkhohliadova.demo_car.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.MapConstraints;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Product> products = new ArrayList<>();
 

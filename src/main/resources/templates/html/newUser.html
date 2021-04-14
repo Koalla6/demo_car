@@ -1,0 +1,98 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Реєстрація</title>
+<style>
+    body{
+        background-color: rgb(25,25,25);
+    }
+
+    #h1{
+        text-align:center;
+        line-height:1.875em;
+        color: aliceblue;
+        font-size: 45px;
+    }
+
+    .table{
+        margin-left: calc((100% - 280px) * 0.5);
+        text-align:left;
+        line-height:1.875em;
+        color: aliceblue;
+        font-size: 25px;
+    }
+
+    .comp2{
+        margin-left: calc((100% - 980px) * 0.5);
+        text-align:center;
+        line-height:1.875em;
+        color: black;
+        font-size: 25px;
+        data-packed:"true";
+        data-vertical-text:"false";
+        left: 20px;
+        width: 940px;
+        position: absolute;
+    }
+
+    .rfield{
+        font-size: 15px;
+    }
+
+    input{
+        border: 4px solid rgb(25,25,25);
+    }
+
+    input:focus{
+        border-color: darkred;
+    }
+</style>
+</head>
+<body>
+
+<h1 id="h1">Реєстрація</h1>
+<form action="/registered" method="POST" class="rf">
+    <table class="table">
+        <tr>
+            <td>Ім'я:</td>
+            <td><input class="rfield" name="firstname" type="text" required></td>
+        </tr>
+        <tr>
+            <td>Прізвище:</td>
+            <td><input class="rfield" name="surname" type="text" required></td>
+        </tr>
+        <tr>
+            <td>Логін:</td>
+            <td><input class="rfield" name="username" type="text" required></td>
+        </tr>
+        <tr>
+            <td>Пароль:</td>
+            <td><input class="rfield" type="password" name="password" required></td>
+        </tr>
+        <tr>
+            <td>Стать:</td>
+            <td>
+                <input class="rfield" type="radio" name="sex" value="0" >Чоловіча
+                <input class="rfield" type="radio" name="sex" value="1" required>Жіноча
+            </td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input class="rfield" type="email" name="email"required></td>
+        </tr>
+        <tr>
+            <td>Моб. телефон:</td>
+            <td><input class="rfield" type="number" name="phone"required></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit" class="comp2 disabled">Зареєструватись</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+
+</body>
+</html>

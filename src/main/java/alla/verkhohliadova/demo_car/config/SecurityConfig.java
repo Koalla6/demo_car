@@ -1,5 +1,6 @@
 package alla.verkhohliadova.demo_car.config;
 
+import alla.verkhohliadova.demo_car.entity.UserRole;
 import alla.verkhohliadova.demo_car.security.JwtConfigure;
 import alla.verkhohliadova.demo_car.security.JwtTokenTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/user/login", "/user/register").permitAll()
-                .antMatchers(HttpMethod.GET, "/user/checkToken").hasAnyRole("ADMIN")
-                .antMatchers(HttpMethod.GET).permitAll()
-                .antMatchers("/img/**").permitAll()
-                .anyRequest().hasAnyRole("ADMIN")
+                // для незареєстрованих користувачів
+                .antMatchers("/newUser").not().fullyAuthenticated()
+                .antMatchers("/login").not().fullyAuthenticated()
+                //для зареєстрованих
+                .antMatchers("/in/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+
+                //.antMatchers(HttpMethod.POST, "/user/login", "/user/register").permitAll()
+                //.antMatchers(HttpMethod.POST).permitAll()
+                //.antMatchers(HttpMethod.GET, "/user/checkToken").hasAnyRole("ADMIN")
+                //.antMatchers(HttpMethod.GET).permitAll()
+                //.antMatchers(HttpMethod.PUT).permitAll()
+                //.antMatchers(HttpMethod.DELETE).permitAll()
+                //.antMatchers("/img/**").permitAll()
+                //.anyRequest().hasAnyRole("ADMIN")
                 .and()
+                //.formLogin();
                 .apply(new JwtConfigure(jwtTokenTool));
     }
 
