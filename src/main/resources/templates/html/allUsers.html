@@ -3,11 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Всі користувачі</title>
+  <style>
+    table{
+      width: 100%;
+    }
+    td, th{
+      text-align: left;
+      padding: 8px;
+    }
+  </style>
 </head>
 <body>
+
+    <a href="/admin/homePageForAdmin">
+        <button>Меню адміністратора</button>
+    </a>
+
 <div>
-  <table>
-    <thead>
+  <table id="tab">
+    <tr>
     <th>ID</th>
     <th>Роль</th>
     <th>Ім'я</th>
@@ -17,24 +31,32 @@
     <th>Стать</th>
     <th>Email</th>
     <th>Номер телефону</th>
-    <th>Car_id</th>
-    </thead>
-    <c:forEach items="${allUsers}" var="user">
-      <tr>
-        <td>${user.id}</td>
-        <td>
-          <c:forEach items="${user.userRole}" var="userRole">${userRole.name}</c:forEach>
+        <th>Видалити</th>
+    <!--<th>Car_id</th>-->
+    </tr>
+    <!--<c:forEach items="${allUsers}" var="user">-->
+    <th:block th:each="user : ${allUsers}" >
+    <tr>
+        <td th:text="${user.id}"></td>
+        <td th:each="userRole: ${user.user_role}" th:text="${userRole}"></td>
+        <td th:text="${user.firstname}"></td>
+        <td th:text="${user.surname}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.sex}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.phone}"></td>
+        <form th:action="@{/admin/allUsers/delete/{id}(id=${user.id})}" method="get">
+        <td><!--</td>action="/admin/allUsers/delete/{id}" method="DELETE">-->
+            <!--<a th:href="@{/admin/allUsers/delete/{id}(id=${user.id})}" >-->
+            <button type="submit">Видалити</button>
+            <!--</a>-->
         </td>
-        <td>${user.firstname}</td>
-        <td>${user.surname}</td>
-        <td>${user.username}</td>
-        <td>${user.password}</td>
-        <td>${user.sex}</td>
-        <td>${user.email}</td>
-        <td>${user.phone}</td>
-        <td>${user.carId}</td>
+        </form>
+        <!--<td th:text="${user.carId}"></td>-->
       </tr>
-    </c:forEach>
+    </th:block>
+    <!--</c:forEach>-->
   </table>
 </div>
 

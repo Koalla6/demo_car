@@ -10,6 +10,7 @@ import alla.verkhohliadova.demo_car.repository.CategoryRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -52,8 +53,9 @@ public class CategoryService {
         return category_1;
     }
 
-    public Category findOne(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Product with id " + id + " not exists"));
+    public Category findOne(Long id){// throws IllegalArgumentException {
+        return categoryRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Category with id " + id + " not exists"));
     }
 }
 

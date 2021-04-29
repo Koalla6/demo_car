@@ -5,7 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/users/in/" method="post">
+<!--<script>
+    //var formData = new FormData(document.form.person);
+    var xhr = new XMLHttpRequest();
+    var body = "username=" + encodeURIComponent(username);
+    xhr.open("POST", true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(body);
+</script>-->
+
+<!--<form action="/users/in/" method="post">-->
+<form name = "person" action = "/users/in" method="post">
     <table class="table">
         <tr>
             <td>Логін:</td>

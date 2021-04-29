@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService {
         user.setSex(request.getSex());
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
-        user.setUserRole(UserRole.ROLE_ADMIN);
+        user.setUserRole(UserRole.ROLE_USER);
 
         userRepository.save(user);
 
@@ -83,13 +83,13 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toList());
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) throws IllegalArgumentException {
         userRepository.delete(findOne(id));
     }
 
     public User findOne(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User with id " + id + " not exists"));
+        return userRepository.findUserById(id);
+                //.orElseThrow(() -> new IllegalArgumentException ("User with id " + id + " not exists"));
     }
 
     public UserRole findUserRoleByUsername(UserRequest userRequest){
@@ -97,5 +97,12 @@ public class UserService implements UserDetailsService {
         User user = findByUsername(username);
         UserRole userRole = user.getUserRole();
         return userRole;
+    }
+
+    public String findEmailByUsername(UserRequest userRequest){
+        String username = userRequest.getUsername();
+        User user = findByUsername(username);
+        String email = user.getEmail();
+        return email;
     }
 }

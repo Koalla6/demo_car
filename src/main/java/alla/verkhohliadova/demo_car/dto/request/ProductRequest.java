@@ -1,21 +1,34 @@
 package alla.verkhohliadova.demo_car.dto.request;
 
+import alla.verkhohliadova.demo_car.entity.TransmissionBox;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 
 @Getter
 @Setter
 public class ProductRequest {
+    //@NotBlank
+    private String model;
+
+    private TransmissionBox transmissionBox;
+
+    private Integer numberOfSeats;
+
+    private Integer yearOfIssue;
+
+    //@Positive (message = "Значення має бути позитивним")
+    //@NotBlank
+    private Long pricePerDay;
+
     @NotBlank
-    private String name;
-    @Positive
-    private Long price;
+    private Integer numberOfDays;
+
+    //@NotBlank
     private String description;
+
     private String image;
-    @NotNull
+
     private Long categoryId;
 }

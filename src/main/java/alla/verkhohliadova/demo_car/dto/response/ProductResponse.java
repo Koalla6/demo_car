@@ -1,24 +1,33 @@
 package alla.verkhohliadova.demo_car.dto.response;
 
+import alla.verkhohliadova.demo_car.entity.Product;
+import alla.verkhohliadova.demo_car.entity.TransmissionBox;
 import lombok.Getter;
 import lombok.Setter;
-import alla.verkhohliadova.demo_car.entity.Product;
 
 @Getter
 @Setter
 public class ProductResponse {
     private Long id;
-    private String name;
+    private String model;
+    private TransmissionBox transmissionBox;
+    private Integer numberOfSeats;
+    private Integer yearOfIssue;
+    private Long pricePerDay;
+    private Integer numberOfDays;
     private String description;
-    private Long price;
     private String image;
     private CategoryResponse category;
 
     public ProductResponse(Product product) {
         id = product.getId();
-        name = product.getName();
+        model = product.getModel();
+        transmissionBox = product.getTransmissionBox();
+        numberOfSeats = product.getNumberOfSeats();
+        yearOfIssue = product.getYearOfIssue();
+        pricePerDay = product.getPricePerDay();
+        numberOfDays = product.getNumberOfDays();
         description = product.getDescription();
-        price = product.getPrice();
         image = product.getImage();
         category = new CategoryResponse(product.getCategory());
     }

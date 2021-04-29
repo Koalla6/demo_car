@@ -37,24 +37,21 @@ public class _UserController {
         return modelAndView;
     }
 
-   @PostMapping("/in/")
+
+   @PostMapping("/in")
    public ModelAndView log(UserRequest userRequest) {
        UserRole userRole = userService.findUserRoleByUsername(userRequest);
        ModelAndView modelAndView = new ModelAndView();
        try {
            userService.login(userRequest);
-           //System.out.println("\n\t\t" + userRole);
            if (userRole == UserRole.ROLE_ADMIN) {
                //return adminController.admin();
                modelAndView.setViewName("html/loginAdmin");
-               //System.out.println("\nadmin");
            }
            else{
                modelAndView.setViewName("html/logining");
-               //System.out.println("\n\tuser");
            }
            return modelAndView;
-
        }catch (Exception e){
            modelAndView.setViewName("html/error");
            return modelAndView;

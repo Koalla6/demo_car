@@ -43,8 +43,8 @@ public class User {
     @Column(nullable = false)
     private UserRole userRole;
 
-    @OneToOne
-    private Car car;
+    //@OneToOne
+    //private Car car;
 
     @OneToMany(mappedBy = "user")
     private List<Ordered> orders = new ArrayList<>();

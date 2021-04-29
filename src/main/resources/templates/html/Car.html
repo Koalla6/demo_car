@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table class="table">
+  <tr>
+    <th>Модель</th>
+    <td th:text="${product.model}"></td>
+  </tr>
+  <tr>
+    <th>Коробка передач</th>
+    <td th:each="transmissionBox: ${product.transmissionBox}" th:text="${transmissionBox}"></td>
+  </tr>
+  <tr>
+    <th>Кількість місць</th>
+    <td th:text="${product.numberOfSeats}"></td>
+  </tr>
+  <tr>
+    <th>Рік випуску</th>
+    <td th:text="${product.yearOfIssue}"></td>
+  </tr>
+  <tr>
+    <th>Ціна за добу</th>
+    <td th:text="${product.pricePerDay}"></td>
+  </tr>
+  <tr>
+    <th>Кількість днів</th>
+    <td th:text="${product.numberOfDays}"></td>
+  </tr>
+  <tr>
+    <th>Фото</th>
+    <td>
+      <img style="height: 300px; width: 300px" src="/img/{product.image}" th:src="${(product.image != null) ? '/img/'+product.image : ''}" alt="no images"  >
+    </td>
+  </tr>
+  <tr>
+    <th>Опис</th>
+    <td th:text="${product.description}"></td>
+  </tr>
+  <tr>
+    <th>Категорія</th>
+    <td th:each="category: ${product.category}" th:text="${category.name}"></td>
+  </tr>
+</table>
+</body>
+</html>

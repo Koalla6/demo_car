@@ -8,9 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -26,15 +23,15 @@ public class Ordered {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate date;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-    private LocalTime time;
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    //private LocalTime time;
 
     private Boolean finished;
 
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "ordered")
-    private List<ProductCount> productCounts = new ArrayList<>();
+    //@OneToMany(mappedBy = "ordered")
+    //private List<ProductCount> productCounts = new ArrayList<>();
 
 }

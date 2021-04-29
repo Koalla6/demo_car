@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Всі автомобілі</title>
+
+    <style>
+        table{
+            width: 100%;
+        }
+        td, th{
+            text-align: left;
+            padding: 8px;
+        }
+        img{
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<a href="/admin/homePageForAdmin">
+    <button>Меню адміністратора</button>
+</a>
+
+<a href="**/add">
+    <button>Додати автомобіль</button>
+</a>
+
+<div>
+    <table id="tab" >
+        <tr>
+            <th>ID</th>
+            <th>Модель</th>
+            <th>Коробка передач</th>
+            <th>Кількість місць</th>
+            <th>Рік випуску</th>
+            <th>Ціна за добу</th>
+            <th>Кількість днів</th>
+            <th>Фото</th>
+            <th>Опис</th>
+            <th>Категорія</th>
+            <th>Редагувати</th>
+            <th>Видалити</th>
+        </tr>
+        <th:block th:each="product : ${allCars}" >
+            <tr>
+                <td th:text="${product.id}"></td>
+                <td th:text="${product.model}"></td>
+                <td th:each="transmissionBox: ${product.transmissionBox}" th:text="${transmissionBox}"></td>
+                <td th:text="${product.numberOfSeats}"></td>
+                <td th:text="${product.yearOfIssue}"></td>
+                <td th:text="${product.pricePerDay}"></td>
+                <td th:text="${product.numberOfDays}"></td>
+                <td>
+                    <img src="/img/{product.image}" th:src="${(product.image != null) ? '/img/'+ product.image : ''}" alt="no images"  >
+                </td>
+                <td th:text="${product.description}"></td>
+                <td th:each="category: ${product.category}" th:text="${category.name}"></td>
+
+                <form th:action="@{/admin/allCars/update/{id}(id=${product.id})}" method="get">
+                    <td>
+                        <button type="submit">Редагувати</button>
+                    </td>
+                </form>
+
+                <form th:action="@{/admin/allCars/delete/{id}(id=${product.id})}" method="get">
+                    <td>
+                        <button type="submit">Видалити</button>
+                    </td>
+                </form>
+            </tr>
+        </th:block>
+    </table>
+</div>
+</body>
+</html>

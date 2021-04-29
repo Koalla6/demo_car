@@ -1,7 +1,6 @@
 package alla.verkhohliadova.demo_car.controller;
 
-import alla.verkhohliadova.demo_car.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
+//import alla.verkhohliadova.demo_car.service.OrderService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/ordered")
 public class OrderedController {
 
-    @Autowired
-    private OrderService orderService;
+    //@Autowired
+    //private OrderService orderService;
 }

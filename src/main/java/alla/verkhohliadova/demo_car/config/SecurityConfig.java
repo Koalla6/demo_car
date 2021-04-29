@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,26 +35,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
+        //http.csrf().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 // для незареєстрованих користувачів
-                .antMatchers("/newUser").not().fullyAuthenticated()
-                .antMatchers("/login").not().fullyAuthenticated()
+                .antMatchers("/newUser").permitAll()
+                .antMatchers("/login", "users/login").permitAll()
                 //для зареєстрованих
-                .antMatchers("/in/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
-
+                .antMatchers(HttpMethod.POST, "/users/in/**").permitAll() //hasAnyRole("ADMIN","USER")
+                // длф адміна
+                .antMatchers(HttpMethod.GET, "/admin/in/**").hasAnyRole("ADMIN")
+                //.antMatchers(HttpMethod.POST, "/admin/**").permitAll()
+                //.antMatchers(HttpMethod.DELETE).hasAnyRole("ADMIN")
                 //.antMatchers(HttpMethod.POST, "/user/login", "/user/register").permitAll()
-                //.antMatchers(HttpMethod.POST).permitAll()
+                .antMatchers(HttpMethod.POST).permitAll() ////////////////////
                 //.antMatchers(HttpMethod.GET, "/user/checkToken").hasAnyRole("ADMIN")
-                //.antMatchers(HttpMethod.GET).permitAll()
+                .antMatchers(HttpMethod.GET).permitAll()
                 //.antMatchers(HttpMethod.PUT).permitAll()
-                //.antMatchers(HttpMethod.DELETE).permitAll()
+                .antMatchers(HttpMethod.DELETE, "/delete/**").permitAll()
                 //.antMatchers("/img/**").permitAll()
                 //.anyRequest().hasAnyRole("ADMIN")
                 .and()
-                //.formLogin();
+                //.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
                 .apply(new JwtConfigure(jwtTokenTool));
     }
 

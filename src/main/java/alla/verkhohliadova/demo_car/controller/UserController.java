@@ -33,10 +33,10 @@ public class UserController {
         return userService.findAll();
     }
 
-    @DeleteMapping("/delete")
-    public void delete(@RequestParam(value = "id") Long id) throws NotFoundException {
+    /*@DeleteMapping("/delete")
+    public void delete(@RequestParam(value = "id") Long id)  {
         userService.delete(id);
-    }
+    }*/
 
     /*@RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public String submit(@Valid @ModelAttribute("user") User user,

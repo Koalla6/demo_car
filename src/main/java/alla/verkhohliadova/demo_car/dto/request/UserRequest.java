@@ -13,16 +13,21 @@ import java.util.List;
 public class UserRequest {
     @NotBlank
     private String firstname;
+
     @NotBlank
     private String surname;
+
     @NotBlank
     private String username;
+
     @Size(min = 3, max = 30)
     private String password;
 
     private Boolean sex;
+
     @NotBlank
     private String email;
+
     @NotBlank
     private String phone;
 

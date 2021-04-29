@@ -5,12 +5,25 @@
     <title>admin</title>
 </head>
 <body>
-<form action="/admin/in/" method="post">
+<!--<script>
+  //var formData = new FormData(document.form.person);
+  var xhr = new XMLHttpRequest();
+  var body = "username=" + encodeURIComponent(username);
+  xhr.open("POST", "/homePageForAdmin" true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.send(body);
+</script>-->
+
+<form action="/admin/in" method="post">
   <table class="table">
     <tr>
-      <td>Key Word:</td>
-      <td><input class="rfield" name="key_word" type="text" required></td>
+      <td>Username:</td>
+      <td><input class="rfield" name="username" type="text" required></td>
     </tr>
+    <!--<tr>
+      <td>Email</td>
+      <td><input class="rfield" name="email" type="email" required></td>
+    </tr>-->
     <tr>
       <td colspan="2">
         <button type="submit" class="comp2 disabled">Зайти</button>
