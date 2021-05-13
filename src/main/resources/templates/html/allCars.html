@@ -7,14 +7,43 @@
     <style>
         table{
             width: 100%;
+            /*border-collapse: collapse; !* Убираем двойные линии между ячейками *!
+            border: 2px solid white;*/
         }
-        td, th{
+        td {
             text-align: left;
             padding: 8px;
+            vertical-align: top;
+            /*border: 1px solid rgb(25,25,25);*/
         }
-        img{
-            width: 200px;
-            height: 200px;
+        th{
+            text-align: center;
+            padding: 8px;
+            vertical-align: top;
+            /*border: 1px solid rgb(25,25,25);*/
+        }
+        .product {
+            display: block;
+            position: relative;
+            text-decoration: none;
+            /*border-bottom: white;
+            border-left: white;
+            border-right: white;*/
+            z-index: 0;
+            height: 300px;
+            width: 300px;
+        }
+
+        img {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
+            color: aliceblue;
         }
     </style>
 </head>
@@ -52,7 +81,7 @@
                 <td th:text="${product.yearOfIssue}"></td>
                 <td th:text="${product.pricePerDay}"></td>
                 <td th:text="${product.numberOfDays}"></td>
-                <td>
+                <td class="product">
                     <img src="/img/{product.image}" th:src="${(product.image != null) ? '/img/'+ product.image : ''}" alt="no images"  >
                 </td>
                 <td th:text="${product.description}"></td>

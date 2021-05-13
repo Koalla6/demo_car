@@ -3,47 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        body{
+            background-color: rgb(25,25,25);
+            /*width: 100%;*/
+        }
+        table{
+            margin: auto;
+            width: 50%;
+        }
+        th{
+            text-align:left;
+            line-height:1.875em;
+            color: aliceblue;
+        }
+        td{
+            text-align:left;
+            line-height:1.875em;
+            color: aliceblue;
+            width: 50%;
+            margin: auto;
+        }
+        .product {
+            display: block;
+            border-radius: 3px;
+            position: relative;
+            text-decoration: none;
+            z-index: 0;
+            height: 300px;
+            width: 300px;
+        }
+
+        img {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
+            color: aliceblue;
+        }
+    </style>
 </head>
 <body>
 <table class="table">
-  <tr>
-    <th>Модель</th>
-    <td th:text="${product.model}"></td>
-  </tr>
-  <tr>
-    <th>Коробка передач</th>
-    <td th:each="transmissionBox: ${product.transmissionBox}" th:text="${transmissionBox}"></td>
-  </tr>
-  <tr>
-    <th>Кількість місць</th>
-    <td th:text="${product.numberOfSeats}"></td>
-  </tr>
-  <tr>
-    <th>Рік випуску</th>
-    <td th:text="${product.yearOfIssue}"></td>
-  </tr>
-  <tr>
-    <th>Ціна за добу</th>
-    <td th:text="${product.pricePerDay}"></td>
-  </tr>
-  <tr>
-    <th>Кількість днів</th>
-    <td th:text="${product.numberOfDays}"></td>
-  </tr>
-  <tr>
-    <th>Фото</th>
-    <td>
-      <img style="height: 300px; width: 300px" src="/img/{product.image}" th:src="${(product.image != null) ? '/img/'+product.image : ''}" alt="no images"  >
-    </td>
-  </tr>
-  <tr>
-    <th>Опис</th>
-    <td th:text="${product.description}"></td>
-  </tr>
-  <tr>
-    <th>Категорія</th>
-    <td th:each="category: ${product.category}" th:text="${category.name}"></td>
-  </tr>
+    <tr>
+        <th>Модель</th>
+        <td th:text="${product.model}"></td>
+    </tr>
+    <tr>
+        <th>Коробка передач</th>
+        <td th:each="transmissionBox: ${product.transmissionBox}" th:text="${transmissionBox}"></td>
+    </tr>
+    <tr>
+        <th>Кількість місць</th>
+        <td th:text="${product.numberOfSeats}"></td>
+    </tr>
+    <tr>
+        <th>Рік випуску</th>
+        <td th:text="${product.yearOfIssue}"></td>
+    </tr>
+    <tr>
+        <th>Ціна за добу</th>
+        <td th:text="${product.pricePerDay}"></td>
+    </tr>
+    <tr>
+        <th>Кількість днів</th>
+        <td th:text="${product.numberOfDays}"></td>
+    </tr>
+    <tr>
+        <th>Фото</th>
+        <td class="product">
+                <img src="/img/{product.image}"  th:src="${(product.image != null)? '/img/'+product.image : ''}"
+                     alt="no images">
+        </td>
+    </tr>
+    <tr>
+        <th>Опис</th>
+        <td th:text="${product.description}"></td>
+    </tr>
+    <tr>
+        <th>Категорія</th>
+        <td th:each="category: ${product.category}" th:text="${category.name}"></td>
+    </tr>
 </table>
 </body>
 </html>

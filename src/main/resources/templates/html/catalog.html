@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <title>Каталог</title>
     <style>
+        body{
+            background-color: rgb(25,25,25);
+        }
+        .products-clearfix{
+            align-content: center;
+        }
         .product-wrapper {
             display: block;
             width: 100%;
             float: left;
             transition: width .2s;
+            /*align-items: center;*/
         }
 
         @media only screen and (min-width: 450px) {
@@ -31,13 +38,13 @@
 
         .product {
             display: block;
-            border: 1px solid #b5e9a7;
+            border: 1px solid rgb(25,25,25);
             border-radius: 3px;
             position: relative;
-            background: #fff;
+            background: rgb(25,25,25);
             margin: 0 20px 20px 0;
             text-decoration: none;
-            color: #474747;
+            color: rgb(25,25,25);
             z-index: 0;
             height: 450px;
         }
@@ -72,13 +79,17 @@
             text-align: center;
             margin: 0;
             font-size: 1em;
-            line-height: 1.4em;
+            line-height: 1.8em;
             overflow: hidden;
+            color: aliceblue;
+            text-transform:uppercase;
+            font-family: Mak;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <ul class="products clearfix" >
+    <ul class="products-clearfix" >
         <li class="product-wrapper" th:each="product : ${allCars}">
             <a th:href="@{/catalog/car/{id}(id=${product.id})}" class="product">
                 <div class="product-photo">
