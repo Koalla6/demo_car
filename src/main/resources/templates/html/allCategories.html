@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Всі автомобілі</title>
-
+    <title>Всі категорії</title>
     <style>
         body {
             background-color: rgb(25, 25, 25);
             color: aliceblue;
             align-content: center;
         }
-
         #div_menu {
             position: absolute;
             left: 50%;
@@ -60,40 +58,25 @@
             color: aliceblue;
             text-decoration: none;
         }
-
-        table {
+        table{
             margin-left: auto;
             margin-right: auto;
-            width: 100%;
+            width: 50%;
             border-spacing: 0 15px;
         }
-
         td {
-            text-align: left;
+            text-align: center;
             padding: 8px;
             vertical-align: top;
             font-size: 16px;
             /*border: 1px solid rgb(25,25,25);*/
         }
-
-        th {
+        th{
             text-align: center;
             padding: 8px;
             vertical-align: top;
             font-size: 18px;
             /*border: 1px solid rgb(25,25,25);*/
-        }
-
-        .product {
-            display: block;
-            position: relative;
-            text-decoration: none;
-            /*border-bottom: white;
-            border-left: white;
-            border-right: white;*/
-            z-index: 0;
-            height: 300px;
-            width: 300px;
         }
 
         img {
@@ -108,13 +91,12 @@
             color: aliceblue;
         }
 
-        #message {
+        #message{
             position: absolute;
             font-size: 18px;
             left: 50%;
             color: #4a864a;
         }
-
         .menuButton {
             target: "_self";
             data-keep-roots: "true";
@@ -128,8 +110,7 @@
             border-radius: 10px;
             cursor: pointer;
         }
-
-        .actionButton {
+        .actionButton{
             background-color: rgb(25, 25, 25);
             color: aliceblue;
         }
@@ -144,9 +125,10 @@
             </a>
         </li>
         <li class="product-wrapper">
-            <a th:href="@{**/add/{userToken}(userToken=${userToken})}">
-                <button class="userlink, menuButton">Додати автомобіль</button>
-            </a>
+
+<a th:href="@{**/addCategory/{userToken}(userToken=${userToken})}">
+    <button class="userlink, menuButton">Додати категорію</button>
+</a>
         </li>
         <li class="product-wrapper">
             <a th:href="@{/users/out/{userToken}(userToken=${userToken})}" class="div_button">
@@ -155,10 +137,9 @@
         </li>
     </ul>
 </div>
-
 <div id="div_all">
     <span style="visibility: hidden; font-size: small" th:text="${userToken}"></span>
-    <table id="tab">
+    <table id="tab" >
         <tr>
             <td>
                 <span id="message" th:text="${message}"></span>
@@ -166,39 +147,14 @@
         </tr>
         <tr>
             <th>ID</th>
-            <th>Модель</th>
-            <th>Коробка передач</th>
-            <th>Кількість місць</th>
-            <th>Рік випуску</th>
-            <th>Ціна за добу</th>
-            <th>Фото</th>
-            <th>Опис</th>
-            <th>Категорія</th>
-            <th>Редагувати</th>
+            <th>Назва</th>
             <th>Видалити</th>
         </tr>
-        <th:block th:each="product : ${allCars}">
+        <th:block th:each="category : ${allCategories}" >
             <tr>
-                <td th:text="${product.id}"></td>
-                <td th:text="${product.model}"></td>
-                <td th:each="transmissionBox: ${product.transmissionBox}" th:text="${transmissionBox}"></td>
-                <td th:text="${product.numberOfSeats}"></td>
-                <td th:text="${product.yearOfIssue}"></td>
-                <td th:text="${product.pricePerDay}"></td>
-                <td class="product">
-                    <img src="/img/{product.image}"
-                         th:src="${(product.image != null) ? '/img/'+ product.image : ''}" alt="no images">
-                </td>
-                <td th:text="${product.description}"></td>
-                <td th:each="category: ${product.category}" th:text="${category.name}"></td>
-
-                <form th:action="@{/admin/allCars/update/{id}(id=${product.id})}" method="get">
-                    <td>
-                        <button class="actionButton" type="submit">Редагувати</button>
-                    </td>
-                </form>
-
-                <form th:action="@{/admin/allCars/delete/{id}/{userToken}(id=${product.id}, userToken=${userToken})}" method="get">
+                <td th:text="${category.id}"></td>
+                <td th:text="${category.name}"></td>
+                <form th:action="@{/admin/allCategories/dalete/{id}/{userToken}(id=${category.id}, userToken=${userToken})}" method="get">
                     <td>
                         <button class="actionButton" type="submit">Видалити</button>
                     </td>

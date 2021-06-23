@@ -4,16 +4,50 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+        body {
+            background-color: rgb(25, 25, 25);
+        }
         table{
             width: 75%;
+            margin-left: auto;
+            margin-right: auto;
+            color: aliceblue;
         }
         td, th{
             text-align: left;
             padding: 8px;
         }
-        img{
-            width: 300px;
+        .product {
+            display: block;
+            position: relative;
+            text-decoration: none;
+            z-index: 0;
             height: 300px;
+            width: 300px;
+        }
+        img{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
+            color: aliceblue;
+        }
+        button {
+            target: "_self";
+            data-keep-roots: "true";
+            data-anchor-comp-id: "";
+            data-anchor: "dataItem-ius9m6yf";
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            background-color: rgb(25, 25, 25);
+            color: aliceblue;
+            font-size: 20px;
+            border-radius: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -52,15 +86,15 @@
           <td th:text="${product.pricePerDay}"></td>
           <td><input class="rfield" name="pricePerDay" type="number"></td>
       </tr>
-      <tr>
+      <!--<tr>
           <th>Кількість днів</th>
           <td th:text="${product.numberOfDays}"></td>
           <td><input class="rfield" name="numberOfDays" type="number"></td>
-      </tr>
+      </tr>-->
       <tr>
           <th>Фото</th>
-          <td>
-              <img style="height: 300px; width: 300px" src="/img/{product.image}" th:src="${(product.image != null) ? '/img/'+product.image : ''}" alt="no images"  >
+          <td class="product">
+              <img src="/img/{product.image}" th:src="${(product.image != null) ? '/img/'+product.image : ''}" alt="no images"  >
           </td>
           <td><input class="rfield" id="file" name="file" type="file"></td>
       </tr>
@@ -84,8 +118,8 @@
           </td>
       </tr>
       <tr>
+          <td style="visibility: hidden">hidden</td>
           <td colspan="2">
-              <!-- <input type="submit" name="submit" value="Додати" onclick="sendRequest()">-->
               <button type="submit" name= "submit" class="comp2 disabled">Оновити інформацію</button>
           </td>
       </tr>

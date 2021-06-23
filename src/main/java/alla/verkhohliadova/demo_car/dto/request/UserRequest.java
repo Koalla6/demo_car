@@ -31,6 +31,8 @@ public class UserRequest {
     @NotBlank
     private String phone;
 
+    private String token;
+
 //    @NotEmpty//@Size(min = 1)
     private List<Long> favoritesIds;
     private UserRole userRole;

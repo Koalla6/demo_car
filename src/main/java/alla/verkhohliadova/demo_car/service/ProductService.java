@@ -2,15 +2,13 @@ package alla.verkhohliadova.demo_car.service;
 
 
 import alla.verkhohliadova.demo_car.dto.request.PaginationRequest;
-import alla.verkhohliadova.demo_car.dto.request.ProductCriteria;
 import alla.verkhohliadova.demo_car.dto.request.ProductRequest;
 import alla.verkhohliadova.demo_car.dto.response.PageResponse;
 import alla.verkhohliadova.demo_car.dto.response.ProductResponse;
-import alla.verkhohliadova.demo_car.entity.Category;
-import alla.verkhohliadova.demo_car.entity.Product;
-import alla.verkhohliadova.demo_car.entity.TransmissionBox;
+import alla.verkhohliadova.demo_car.entity.*;
+import alla.verkhohliadova.demo_car.repository.FavouriteRepository;
+import alla.verkhohliadova.demo_car.repository.OrderedRepository;
 import alla.verkhohliadova.demo_car.repository.ProductRepository;
-import alla.verkhohliadova.demo_car.specification.ProductSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -35,6 +33,12 @@ public class ProductService {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private FavouriteRepository favouriteRepository;
+
+    @Autowired
+    private OrderedRepository orderedRepository;
+
     /*public static void setAllUsers(Map<Integer, Product> allUsers) {
         ProductService.allUsers = allUsers;
     }*/
@@ -43,11 +47,11 @@ public class ProductService {
         productRepository.save(productRequestToProduct(null, request, file));
     }
 
-    public List<ProductResponse> findAllByCriteria(ProductCriteria criteria) {
+    /*public List<ProductResponse> findAllByCriteria(ProductCriteria criteria) {
         return productRepository.findAll(
                 new ProductSpecification(criteria), criteria.getPaginationRequest().toPageable()
         ).stream().map(ProductResponse::new).collect(Collectors.toList());
-    }
+    }*/
 
     public PageResponse<ProductResponse> findPage(PaginationRequest paginationRequest) {
         Page<Product> page = productRepository.findAll(paginationRequest.toPageable());
@@ -73,7 +77,7 @@ public class ProductService {
         product.setNumberOfSeats(request.getNumberOfSeats());
         product.setYearOfIssue(request.getYearOfIssue());
         product.setPricePerDay(request.getPricePerDay());
-        product.setNumberOfDays(request.getNumberOfDays());
+        //product.setNumberOfDays(request.getNumberOfDays());
         product.setDescription(request.getDescription());
 
         File image = fileService.multipartFileConvertToFile(file);
@@ -90,8 +94,8 @@ public class ProductService {
         if (!request.getModel().isEmpty()) {
             product.setModel(request.getModel());
         }
-        if (request.getTransmissionBox()!= TransmissionBox.AUTOMATIC ||
-                request.getTransmissionBox()!=TransmissionBox.MANUAL){
+        if (request.getTransmissionBox()== TransmissionBox.AUTOMATIC ||
+                request.getTransmissionBox()==TransmissionBox.MANUAL){
             product.setTransmissionBox(request.getTransmissionBox());
         }
         if (request.getNumberOfSeats() != null){
@@ -103,9 +107,9 @@ public class ProductService {
         if (request.getPricePerDay() != null){
             product.setPricePerDay(request.getPricePerDay());
         }
-        if (request.getNumberOfDays() != null){
-            product.setNumberOfDays(request.getNumberOfDays());
-        }
+        //if (request.getNumberOfDays() != null){
+        //    product.setNumberOfDays(request.getNumberOfDays());
+        //}
         if(!file.isEmpty()){
             File image = fileService.multipartFileConvertToFile(file);
             if (image.isFile()){
@@ -134,9 +138,24 @@ public class ProductService {
         return productRepository.findAll().stream()
                 .map(ProductResponse::new)
                 .collect(Collectors.toList());
+
     }
 
     public void delete(Long id) throws IllegalArgumentException {
+        //Long favouriteId, orderedId;
+        Product productGet = findOne(id);
+        List <Favourite> allFavourites = favouriteRepository.findAll();
+        List <Ordered> allOrderers = orderedRepository.findAll();
+        for (Favourite favourite: allFavourites){
+            if (favourite.getProduct() == productGet){
+                favouriteRepository.delete(favourite);
+            }
+        }
+        for (Ordered ordered : allOrderers){
+            if (ordered.getProduct() == productGet){
+                orderedRepository.delete(ordered);
+            }
+        }
         productRepository.delete(findOne(id));
     }
     /*public static List<Product> getAllProducts(){

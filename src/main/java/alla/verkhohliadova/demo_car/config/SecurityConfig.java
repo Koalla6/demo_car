@@ -1,6 +1,5 @@
 package alla.verkhohliadova.demo_car.config;
 
-import alla.verkhohliadova.demo_car.entity.UserRole;
 import alla.verkhohliadova.demo_car.security.JwtConfigure;
 import alla.verkhohliadova.demo_car.security.JwtTokenTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,9 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // для незареєстрованих користувачів
                 .antMatchers("/newUser").permitAll()
-                .antMatchers("/login", "users/login").permitAll()
+                .antMatchers("/login", "users/registered").permitAll()
                 //для зареєстрованих
-                .antMatchers(HttpMethod.POST, "/users/in/**").permitAll() //hasAnyRole("ADMIN","USER")
+                .antMatchers(HttpMethod.POST, "/users/in/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/favourites/**").permitAll()//hasAnyRole("ADMIN","USER")
                 // длф адміна
                 .antMatchers(HttpMethod.GET, "/admin/in/**").hasAnyRole("ADMIN")
                 //.antMatchers(HttpMethod.POST, "/admin/**").permitAll()

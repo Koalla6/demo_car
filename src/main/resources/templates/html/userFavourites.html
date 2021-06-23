@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Каталог</title>
+    <title>Title</title>
     <style>
         body {
             background-color: rgb(25, 25, 25);
@@ -22,7 +22,7 @@
             text-align: center;
         }
 
-        #div_all{
+        #div_all {
             align-content: center;
             position: absolute;
             top: 20%;
@@ -38,6 +38,18 @@
 
         .product-wrapper {
             display: inline-block;
+            width: 100%;
+            float: left;
+            transition: width .2s;
+            /*align-items: center;*/
+        }
+
+        .products-clearfix {
+            align-content: center;
+        }
+
+        .product-wrapper {
+            display: block;
             width: 100%;
             float: left;
             transition: width .2s;
@@ -107,19 +119,7 @@
             color: aliceblue;
             text-transform: uppercase;
             /*font-family: Mak;*/
-            text-decoration: none;
             font-weight: bold;
-        }
-
-        a {
-            text-decoration: none;
-            color: aliceblue;
-        }
-
-        .link {
-            padding-top: 20px;
-            width: auto;
-            /*float: left;*/
         }
 
         .userlink {
@@ -145,70 +145,19 @@
             border-radius: 10px;
             cursor: pointer;
         }
-
-        .linkButton {
-            width: auto;
-            float: left;
-            cursor: pointer;
-        }
-
-        #this_page {
-            background-color: #3f3f3f;
-            cursor: default;
-        }
-
     </style>
-    <script th:inline="javascript">
-        function showAddingToFavourites() {
-            var token = /*[[${userToken}]]*/ null;
-            var formElements = document.getElementsByClassName("addingForm");
-            var link = document.getElementsByClassName("link");
-            var userLink = document.getElementsByClassName("userlink");
-            if (token === null) {
-                //alert("no Token + " + link.length)
-                for (var i = 0; i < link.length; i++) {
-                    console.log("link" + i);
-                    userLink[i].style.display = "none";
-                }
-            for (var i = 0; i<formElements.length; i++){
-                console.log("form" + i);
-                formElements[i].style.display = "none";
-            }
-            } else {
-                for (var i = 0; i < userLink.length + 3; i++) {
-                    link[i].style.display = "none";
-                }
-            }
-        }
-
-    </script>
 </head>
-<body onload="showAddingToFavourites()">
-<output style="color: aliceblue; visibility: hidden" th:text="${userToken}"></output>
-
+<body>
 <div id="div_menu">
     <ul class="products-clearfix">
         <li class="product-wrapper">
-            <a  th:href="@{/rules/{userToken}(userToken=${userToken})}">
+            <a th:href="@{/rules/{userToken}(userToken=${userToken})}">
                 <button class="userlink" type="submit">Умови прокату</button>
             </a>
-            <a  href="/rules">
-                <button class="link" type="submit">Умови прокату</button>
-            </a>
         </li>
         <li class="product-wrapper">
-            <a href="#">
-                <button id="this_page" type="submit">Каталог</button>
-            </a>
-        </li>
-        <li class="product-wrapper">
-            <a href="/signUp">
-                <button class="link" type="submit">Реєстрація</button>
-            </a>
-        </li>
-        <li class="product-wrapper">
-            <a href="/login">
-                <button class="link" type="submit">Вхід</button>
+            <a th:href="@{/users/catalog/{userToken}(userToken=${userToken})}">
+                <button class="userlink" type="submit">Каталог</button>
             </a>
         </li>
         <li class="product-wrapper">
@@ -218,16 +167,17 @@
         </li>
         <li class="product-wrapper">
             <a th:href="@{/users/out/{userToken}(userToken=${userToken})}" class="div_button">
-                <button class="userlink" type="submit" >Вийти</button>
+                <button class="userlink" type="submit">Вийти</button>
             </a>
         </li>
     </ul>
 </div>
-
 <div id="div_all">
+    <output style="visibility: hidden; font-size: small" th:text="${userToken}"></output>
     <ul class="products-clearfix">
-        <li class="product-wrapper" th:each="product : ${allCars}">
-            <div class="product">
+        <li class="product-wrapper" th:each="product : ${allFavouriteCars}">
+            <a th:href="@{/users/catalog/{userToken}/car/{productId}(userToken=${userToken},productId=${product.id})}"
+               class="product">
                 <div class="product-photo">
                     <img src="/img/{product.image}" th:src="${(product.image != null) ? '/img/'+ product.image : ''}"
                          alt="no images">
@@ -236,20 +186,10 @@
                 <p>Коробка передач: <span th:each="transmissionBox: ${product.transmissionBox}"
                                           th:text="${transmissionBox}"></span></p>
                 <p>Ціна за добу: <span th:text="${product.pricePerDay}"></span> $</p>
-
-                <form class="link" th:action="@{**/catalog/car/{id}(id=${product.id})}" method="get">
-                    <button class="linkButton" type="submit">Детальніше</button>
-                </form>
-                <form class="userlink"
-                      th:action="@{/users/catalog/{userToken}/car/{productId}(userToken=${userToken},productId=${product.id})}"
-                      method="get">
-                    <button class="linkButton" type="submit">Детальніше</button>
-                </form>
-            </div>
-            <form class="addingForm"
-                  th:action="@{/favourites/add/{userToken}/{productId}(userToken=${userToken},productId=${product.id})}"
+            </a>
+            <form class="addingForm" th:action="@{/favourites/delete/{userToken}/{productId}(userToken=${userToken},productId=${product.id})}"
                   method="get">
-                <button type="submit">Зберегти</button>
+                <button type="submit">Видалити з улюблених</button>
             </form>
         </li>
     </ul>

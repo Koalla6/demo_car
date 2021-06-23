@@ -1,16 +1,14 @@
 package alla.verkhohliadova.demo_car.service;
 
-import alla.verkhohliadova.demo_car.entity.Product;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import alla.verkhohliadova.demo_car.dto.request.CategoryRequest;
 import alla.verkhohliadova.demo_car.dto.response.CategoryResponse;
 import alla.verkhohliadova.demo_car.entity.Category;
 import alla.verkhohliadova.demo_car.repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -32,7 +30,7 @@ public class CategoryService {
 
     public void update(Long id, CategoryRequest request) {
         categoryRepository.save(categoryRequestToCategory(findOne(id), request));
-    }
+    } // не потрібно
 
     public void delete(Long id) {
         categoryRepository.delete(findOne(id));

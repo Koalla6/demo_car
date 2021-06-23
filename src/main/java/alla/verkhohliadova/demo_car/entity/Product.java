@@ -4,6 +4,8 @@ package alla.verkhohliadova.demo_car.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,35 +18,42 @@ import javax.persistence.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; //
 
     @Column//(nullable = false)
-    private String model;
+    private String model; //
 
     @Column
-    private TransmissionBox transmissionBox;
+    private TransmissionBox transmissionBox; //
 
     @Column
-    private Integer numberOfSeats;
+    private Integer numberOfSeats; //
 
     @Column
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy")
-    private Integer yearOfIssue;
+    private Integer yearOfIssue; //
 
     @Column//(nullable = false)
-    private Long pricePerDay;
+    private Long pricePerDay; //
+
+    //@Column
+    //private Integer numberOfDays; //dont need
 
     @Column
-    private Integer numberOfDays;
-
-    private String image;
+    private String image; //
     //private File file;
 
     @Column(columnDefinition = "text", nullable = false)
-    private String description;
+    private String description; //
 
     @ManyToOne
     private Category category;
+
+    @OneToMany (mappedBy = "product")
+    private List<Ordered> ordered = new ArrayList<>();
+
+    @OneToMany (mappedBy = "product")
+    private List<Favourite> favourites = new ArrayList<>();
 
     //@OneToMany(mappedBy = "product")
     //private List<ProductCount> productCounts = new ArrayList<>();

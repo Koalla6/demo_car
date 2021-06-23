@@ -1,11 +1,9 @@
 package alla.verkhohliadova.demo_car.dto.response;
 
-import alla.verkhohliadova.demo_car.entity.Category;
 import alla.verkhohliadova.demo_car.entity.User;
 import alla.verkhohliadova.demo_car.entity.UserRole;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Getter
 @Setter
@@ -19,6 +17,7 @@ public class UserResponse {
     private String email;
     private String phone;
     private UserRole user_role;
+    private String token;
 
     public UserResponse(User user) {
         id = user.getId();
@@ -30,5 +29,6 @@ public class UserResponse {
         email = user.getEmail();
         phone = user.getPhone();
         user_role = user.getUserRole();
+        token = user.getToken();
     }
 }

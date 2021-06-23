@@ -6,6 +6,7 @@ import alla.verkhohliadova.demo_car.service.CategoryService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -15,9 +16,15 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping("/post")
-    public void create(@RequestBody CategoryRequest categoryRequest){
-       categoryService.create(categoryRequest);
+    @PostMapping("/add")
+    public ModelAndView create(CategoryRequest categoryRequest){
+        categoryService.create(categoryRequest);
+        List<CategoryResponse> allCategories = categoryService.findAll();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("message", "Нову категорію успішно додано");
+        modelAndView.addObject("allCategories", allCategories);
+        modelAndView.setViewName("html/allCategories");
+        return modelAndView;
     }
 
     @GetMapping("/get")

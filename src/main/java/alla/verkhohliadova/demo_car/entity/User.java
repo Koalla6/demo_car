@@ -43,13 +43,16 @@ public class User {
     @Column(nullable = false)
     private UserRole userRole;
 
+    @Column
+    private String token;
+
     //@OneToOne
     //private Car car;
 
     @OneToMany(mappedBy = "user")
     private List<Ordered> orders = new ArrayList<>();
 
-    @ManyToMany
-    private List<Product> favorites = new ArrayList<>();
+    @OneToMany (mappedBy = "user")
+    private List<Favourite> favorites = new ArrayList<>();
 
 }

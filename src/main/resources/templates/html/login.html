@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Вхід</title>
     <style>
         body{
             background-color: rgb(25,25,25);
             height: 100%;
         }
 
-        #h1{
+        h1{
             text-align:center;
             line-height:1.875em;
             color: aliceblue;
@@ -17,12 +17,30 @@
         }
 
         .table{
-            /*margin-left: calc((100% - 280px) * 0.5);*/
-            text-align:left;
+            text-align:center;
             line-height:1.875em;
             color: aliceblue;
             font-size: 25px;
-            margin: auto;
+            margin-left: auto;
+            margin-right: auto;
+            width: 35%;
+            left: 50%;
+            padding: 5px;
+        }
+
+        td{
+            text-align: right;
+            padding: 8px;
+            font-size: 18px;
+        }
+
+        .td_input{
+            text-align: center;
+        }
+
+        .td_button{
+            text-align: left;
+            padding-left: 15%;
         }
 
         .comp2{
@@ -49,32 +67,64 @@
         input:focus{
             border-color: darkred;
         }
+        button {
+            target: "_self";
+            data-keep-roots: "true";
+            data-anchor-comp-id: "";
+            data-anchor: "dataItem-ius9m6yf";
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            background-color: rgb(25, 25, 25);
+            color: aliceblue;
+            font-size: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #message{
+            position: absolute;
+            left: 50%;
+            /*top: 10%;*/
+            transform: translate(-50%, -50%);
+            /*border: 5px solid #FFFF00;*/
+            padding: 10px;
+            font-size: 20px;
+            color: #4a864a;
+        }
+
+        #error{
+            position: absolute;
+            left: 50%;
+            /*top: 10%;*/
+            transform: translate(-50%, -50%);
+            /*border: 5px solid #FFFF00;*/
+            padding: 10px;
+            font-size: 20px;
+            color: red;
+        }
     </style>
 </head>
 <body>
-<!--<script>
-    //var formData = new FormData(document.form.person);
-    var xhr = new XMLHttpRequest();
-    var body = "username=" + encodeURIComponent(username);
-    xhr.open("POST", true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(body);
-</script>-->
 
-<!--<form action="/users/in/" method="post">-->
+<h1>Вхід</h1>
 <form name = "person" action = "/users/in" method="post">
     <table class="table">
         <tr>
+            <td><span id="message" th:text="${message}">message</span></td>
+            <td><span id="error" th:text="${error}"></span></td>
+        </tr>
+        <tr>
             <td>Логін:</td>
-            <td><input class="rfield" name="username" type="text" required></td>
+            <td class="td_input"><input class="rfield" name="username" type="text" required></td>
         </tr>
         <tr>
             <td>Пароль:</td>
-            <td><input class="rfield" type="password" name="password" required></td>
+            <td class="td_input"><input class="rfield" type="password" name="password" required></td>
         </tr>
         <tr>
-            <td colspan="2">
-                <button type="submit" class="comp2 disabled">Зайти</button>
+            <td style="visibility: hidden">hidden</td>
+            <td class="td_button">
+                <button type="submit">Вхід</button>
             </td>
         </tr>
     </table>

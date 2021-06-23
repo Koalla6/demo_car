@@ -1,39 +1,42 @@
 package alla.verkhohliadova.demo_car.service;
 
+import alla.verkhohliadova.demo_car.dto.request.OrderedRequest;
+import alla.verkhohliadova.demo_car.dto.response.OrderedResponse;
+import alla.verkhohliadova.demo_car.entity.Ordered;
+import alla.verkhohliadova.demo_car.entity.Product;
+import alla.verkhohliadova.demo_car.entity.User;
+import alla.verkhohliadova.demo_car.repository.OrderedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import alla.verkhohliadova.demo_car.dto.request.OrderRequest;
-import alla.verkhohliadova.demo_car.dto.request.ProductCountRequest;
-import alla.verkhohliadova.demo_car.entity.Ordered;
-import alla.verkhohliadova.demo_car.entity.ProductCount;
-import alla.verkhohliadova.demo_car.repository.OrderRepository;
-import alla.verkhohliadova.demo_car.repository.ProductCountRepository;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
 
-    @Autowired
-    private ProductCountRepository productCountRepository;
+   // @Autowired
+   // private ProductCountRepository productCountRepository;
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderedRepository orderedRepository;
 
     @Autowired
     private ProductService productService;
 
-    public void create(OrderRequest request) {
-        Ordered ordered = orderRequestToOrder(null, request);
-        ordered = orderRepository.saveAndFlush(ordered);
-        List<ProductCount> productCounts = orderRequestToProductCounts(request, ordered);
-        productCountRepository.saveAll(productCounts);
+    @Autowired
+    private UserService userService;
+
+    public Ordered create(OrderedRequest request, Long userId, Long productId) {
+        //Ordered ordered = ;
+        return orderedRepository.save(orderedRequestToOrder(null, request, userId, productId));
+       // List<ProductCount> productCounts = orderRequestToProductCounts(request, ordered);
+       // productCountRepository.saveAll(productCounts);
     }
 
-    private List<ProductCount> orderRequestToProductCounts(OrderRequest request, Ordered ordered) {
+    /*private List<ProductCount> orderedRequestToProductCounts(OrderedRequest request, Ordered ordered) {
         return request.getProductCountRequests().stream().map(p -> productCountRequestToProductCount(p, ordered)).collect(Collectors.toList());
     }
 
@@ -43,16 +46,60 @@ public class OrderService {
                 .product(productService.findOne(request.getProductId()))
                 .ordered(ordered)
                 .build();
-    }
+    }*/
 
-    private Ordered orderRequestToOrder(Ordered ordered, OrderRequest request) {
+    private Ordered orderedRequestToOrder(Ordered ordered, OrderedRequest request, Long userId, Long productId) {
         if (ordered == null) {
             ordered = new Ordered();
-            ordered.setDate(LocalDate.now());
-            ordered.setTime(LocalTime.now());
-            ordered.setFinished(false);
         }
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDateStart = LocalDate.parse(request.getDateStart());//, formatter);
+        LocalDate localDateFinish = LocalDate.parse(request.getDateFinish());//, formatter);
+
+        User user = userService.findOne(userId);
+        Product product = productService.findOne(productId);
+
+        ordered.setDateStart(localDateStart);
+        ordered.setTimeStart(request.getTimeStart());
+        ordered.setDateFinish(localDateFinish);
+        ordered.setTimeFinish(request.getTimeFinish());
+        ordered.setFinished(request.getFinished());
+        //ordered.setPrice(price);
+        ordered.setPrice(request.getPrice());
+        ordered.setProduct(product);
+        ordered.setUser(user);
         //other fields
         return ordered;
+    }
+
+    /*public Ordered findOne(Long userId, Long productId){
+        User userGet = userService.findOne(userId);
+        Product productGet = productService.findOne(productId);
+        List <Ordered> allOrderers = orderedRepository.findAll();
+        Ordered ordered = new Ordered();
+        //for (ordered:allOrderers){
+            //if ()
+        //}
+        return ordered;
+    }*/
+
+    public List<OrderedResponse> findAll() {
+        return orderedRepository.findAll().stream()
+                .map(OrderedResponse::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<OrderedResponse> findAllUserOrderers(Long userId){
+        User userGet = userService.findOne(userId);
+        List <Ordered> orderedsForOneUser = new ArrayList<>();
+        List <Ordered> all = orderedRepository.findAll();
+        for (Ordered ordered:all){
+            if(ordered.getUser() == userGet){
+                orderedsForOneUser.add(ordered);
+            }
+        }
+        return orderedsForOneUser.stream()
+                .map(OrderedResponse::new)
+                .collect(Collectors.toList());
     }
 }

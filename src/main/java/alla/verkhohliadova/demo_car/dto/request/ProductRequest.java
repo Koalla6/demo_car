@@ -4,8 +4,6 @@ import alla.verkhohliadova.demo_car.entity.TransmissionBox;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-
 @Getter
 @Setter
 public class ProductRequest {
@@ -22,8 +20,8 @@ public class ProductRequest {
     //@NotBlank
     private Long pricePerDay;
 
-    @NotBlank
-    private Integer numberOfDays;
+    //@NotBlank
+    //private Integer numberOfDays;
 
     //@NotBlank
     private String description;
@@ -31,4 +29,5 @@ public class ProductRequest {
     private String image;
 
     private Long categoryId;
+
 }

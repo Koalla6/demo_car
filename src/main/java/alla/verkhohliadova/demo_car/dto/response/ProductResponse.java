@@ -14,7 +14,7 @@ public class ProductResponse {
     private Integer numberOfSeats;
     private Integer yearOfIssue;
     private Long pricePerDay;
-    private Integer numberOfDays;
+    //private Integer numberOfDays;
     private String description;
     private String image;
     private CategoryResponse category;
@@ -26,7 +26,7 @@ public class ProductResponse {
         numberOfSeats = product.getNumberOfSeats();
         yearOfIssue = product.getYearOfIssue();
         pricePerDay = product.getPricePerDay();
-        numberOfDays = product.getNumberOfDays();
+        //numberOfDays = product.getNumberOfDays();
         description = product.getDescription();
         image = product.getImage();
         category = new CategoryResponse(product.getCategory());

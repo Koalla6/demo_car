@@ -2,9 +2,7 @@ package alla.verkhohliadova.demo_car.service;
 
 import alla.verkhohliadova.demo_car.dto.request.UserRequest;
 import alla.verkhohliadova.demo_car.dto.response.AuthenticationResponse;
-import alla.verkhohliadova.demo_car.dto.response.CategoryResponse;
 import alla.verkhohliadova.demo_car.dto.response.UserResponse;
-import alla.verkhohliadova.demo_car.entity.Category;
 import alla.verkhohliadova.demo_car.entity.User;
 import alla.verkhohliadova.demo_car.entity.UserRole;
 import alla.verkhohliadova.demo_car.repository.UserRepository;
@@ -12,7 +10,6 @@ import alla.verkhohliadova.demo_car.security.JwtTokenTool;
 import alla.verkhohliadova.demo_car.security.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -39,23 +36,27 @@ public class UserService implements UserDetailsService {
     private BCryptPasswordEncoder encoder;
 
 
-    public AuthenticationResponse register(UserRequest request) {
+    public Boolean register (UserRequest request){ //AuthenticationResponse register(UserRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new BadCredentialsException("User with username " + request.getUsername() + " already exists");
+            return false;
+            //throw new BadCredentialsException("User with username " + request.getUsername() + " already exists");
         }
-        User user = new User();
-        user.setFirstname(request.getFirstname());
-        user.setSurname(request.getSurname());
-        user.setUsername(request.getUsername());
-        user.setPassword(encoder.encode(request.getPassword()));
-        user.setSex(request.getSex());
-        user.setEmail(request.getEmail());
-        user.setPhone(request.getPhone());
-        user.setUserRole(UserRole.ROLE_USER);
+        else {
+            User user = new User();
+            user.setFirstname(request.getFirstname());
+            user.setSurname(request.getSurname());
+            user.setUsername(request.getUsername());
+            user.setPassword(encoder.encode(request.getPassword()));
+            user.setSex(request.getSex());
+            user.setEmail(request.getEmail());
+            user.setPhone(request.getPhone());
+            user.setUserRole(UserRole.ROLE_USER);
 
-        userRepository.save(user);
+            userRepository.save(user);
+            return true;
+        }
 
-        return login(request);
+        //return login(request);
     }
 
     public AuthenticationResponse login(UserRequest request) {
@@ -63,6 +64,9 @@ public class UserService implements UserDetailsService {
         User user = findByUsername(username);
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, request.getPassword()));
         String token = jwtTokenTool.createToken(username, user.getUserRole());
+        //System.out.println(user.getUsername() + ", " + user.getFirstname());
+        user.setToken(token);
+        userRepository.save(user);
         System.out.println(token);
         return new AuthenticationResponse(username, token);
     }
@@ -73,7 +77,7 @@ public class UserService implements UserDetailsService {
         return new JwtUser(user.getUsername(), user.getUserRole(), user.getPassword());
     }
 
-    private User findByUsername(String username)  {
+    public User findByUsername(String username)  {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not exists"));
     }
 
@@ -99,10 +103,41 @@ public class UserService implements UserDetailsService {
         return userRole;
     }
 
-    public String findEmailByUsername(UserRequest userRequest){
+    public String findTokenByUsername(String username){
+        User user = findByUsername(username);
+        String token = user.getToken();
+        return token;
+    }
+
+    public User findByToken(String token)  {
+        return userRepository.findByToken(token).orElseThrow(() -> new UsernameNotFoundException("User with token " + token + " not exists"));
+    }
+
+    public Long findUserIdByToken(String token){
+        User user = findByToken(token);
+        Long userId = user.getId();
+        return userId;
+    }
+
+    public void update(Long id, UserRequest userRequest){
+        User user = findOne(id);
+        if(!userRequest.getPassword().isEmpty()){
+            user.setPassword(encoder.encode(userRequest.getPassword()));
+        }
+        if(!userRequest.getEmail().isEmpty()){
+            user.setEmail(userRequest.getEmail());
+        }
+        if(!userRequest.getPhone().isEmpty()){
+            user.setPhone(userRequest.getPhone());
+        }
+        userRepository.save(user);
+        //userRepository.save(userRequestToUserUpdate(findOne(id), userRequest));
+    }
+
+    /*public String findEmailByUsername(UserRequest userRequest){
         String username = userRequest.getUsername();
         User user = findByUsername(username);
         String email = user.getEmail();
         return email;
-    }
+    }*/
 }
